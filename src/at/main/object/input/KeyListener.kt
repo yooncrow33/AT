@@ -1,6 +1,7 @@
 package ie.main.input.at.main.`object`.input
 
 import at.main.Main
+import at.main.`object`.manager.Tab
 import scope.KeyBindingBase
 import java.awt.KeyEventDispatcher
 import java.awt.KeyboardFocusManager
@@ -20,6 +21,18 @@ class KetListener(comp: JComponent, var main: Main) : KeyBindingBase(comp) {
             false
         })
     }
+    //tab
+    override fun onKey1Press() {
+        main.getTab().setTabState(Tab.State.store)
+    }
+    override fun onKey2Press() {
+        main.getTab().setTabState(Tab.State.aircraft)
+    }
+    override fun onKey3Press() {
+        main.getTab().setTabState(Tab.State.setting)
+    }
+
+
     //move
     override fun onKeyWPress() {
         main.view.moveTrueW()

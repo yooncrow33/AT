@@ -44,8 +44,6 @@ public class View extends Entity {
 
     @Override
     public void render(Graphics g, double x, double y) {
-        g.setColor(Color.red);
-        g.fillOval((int)(x - 20/2), (int)(y - 20/2), 20,20);
     }
 
     public void update(double delta) {

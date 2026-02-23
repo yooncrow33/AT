@@ -15,7 +15,7 @@ public class GraphicsManager {
     public void renderMap(Graphics g, Main main) {
         final int MAP_SCALE = 30;
 
-        final int MINIMAP_X_START = 10;
+        final int MINIMAP_X_START = 1740;
         final int MINIMAP_Y_START = 10;
         final int MINIMAP_WIDTH = 5000 / MAP_SCALE;
         final int MINIMAP_HEIGHT = 3000 / MAP_SCALE;

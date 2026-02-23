@@ -8,6 +8,7 @@ import at.main.object.input.MouseListener;
 import at.main.object.manager.AirportKey;
 import at.main.object.manager.Console;
 import at.main.object.manager.GraphicsManager;
+import at.main.object.manager.Tab;
 import ie.main.input.at.main.object.input.KetListener;
 import scope.SideScrollBase;
 
@@ -28,6 +29,9 @@ public class Main extends SideScrollBase {
 
     MouseListener mouseListener = new MouseListener(this);
 
+    Tab tab = new Tab();
+    public Tab getTab() {return tab;}
+
     //변수
     final int profileId;
     int mouseX = 0;
@@ -47,6 +51,7 @@ public class Main extends SideScrollBase {
         //mouseY = (int) (getMouseY() - (getCamera().getY() + 540));
         mouseX = (int) (getMouseX() + getCamera().getX() - 960);
         mouseY = (int) (getMouseY() + getCamera().getY() - 540);
+        tab.update(dt);
     }
 
     @Override
@@ -70,17 +75,32 @@ public class Main extends SideScrollBase {
         }
         addEntity(view);
         this.addMouseListener(mouseListener);
+        this.addMouseWheelListener(mouseListener);
+
+        launch();
     }
 
     @Override
     protected void backGroundRender(Graphics g) {
         gm.backGroundRender(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     @Override
     protected void render(Graphics g) {
         console.render(g);
         gm.renderMap(g,this);
+
+        g.setColor(new Color(35,35,35));
+        g.fillRect(-200,-200,4000,200);
+        g.fillRect(-200,-200,200,4000);
+        g.fillRect(-200,1080,4000,2000);
+        g.fillRect(1920,-400,300,4000);
+
+        tab.render(g);
+
     }
 
     public void click() {
@@ -93,10 +113,17 @@ public class Main extends SideScrollBase {
         }
     }
 
+    public void upScroll() {
+        tab.upScroll();
+    }
+
+    public void downScroll() {
+        tab.downScroll();
+    }
+
     public Main(int profileId) {
         super("at",5000,3000);
         this.profileId = profileId;
-        launch();
     }
 
     public static void main(String[] args) {

@@ -11,7 +11,11 @@ public class Main extends SideScrollBase {
 
     }
 
-    public Main(String title, int worldWidth, int worldHeight) {
-        super(title, worldWidth, worldHeight);
+    public Main() {
+        super("at", 5000,5000);
+    }
+
+    public static void main(String[] args) {
+        new Main();
     }
 }

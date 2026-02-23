@@ -22,16 +22,29 @@ class KetListener(comp: JComponent, var main: Main) : KeyBindingBase(comp) {
     }
     //move
     override fun onKeyWPress() {
-        super.onKeyWPress()
+        main.view.moveTrueW()
     }
     override fun onKeyAPress() {
-        super.onKeyWPress()
+        main.view.moveTrueA()
     }
     override fun onKeySPress() {
-        super.onKeyWPress()
+        main.view.moveTrueS()
     }
     override fun onKeyDPress() {
-        super.onKeyWPress()
+        main.view.moveTrueD()
+    }
+
+    override fun onKeyWRelease() {
+        main.view.moveFalseW()
+    }
+    override fun onKeyARelease() {
+        main.view.moveFalseA()
+    }
+    override fun onKeySRelease() {
+        main.view.moveFalseS()
+    }
+    override fun onKeyDRelease() {
+        main.view.moveFalseD()
     }
 
     //console

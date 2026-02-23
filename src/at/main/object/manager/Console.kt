@@ -140,7 +140,7 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
         g2.setColor(Color(190, 190, 190)) // 입력 프롬프트 Ice Blue
         g2.setFont(Font("Consolas", Font.BOLD, 18))
         val cursor = if (System.currentTimeMillis() % 1000 > 300) "_" else ""
-        g2.drawString("root@ie:~$ $buffer$cursor", 30, 320)
+        g2.drawString("root@at:~$ $buffer$cursor", 30, 320)
 
         // [Right Zone] 시스템 모니터
         g2.color = Color(20, 20, 20) // 구분선도 블루 그레이로
@@ -163,7 +163,7 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
         // 하단 로고
         g2.setColor(Color(35, 35, 35))
         g2.setFont(Font("Impact", Font.ITALIC, 40))
-        g2.drawString("IE CONSOLE", 1530, 300)
+        g2.drawString("AT CONSOLE", 1530, 300)
     }
 
     // 모니터링용 헬퍼 함수

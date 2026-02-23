@@ -20,6 +20,21 @@ class KetListener(comp: JComponent, var main: Main) : KeyBindingBase(comp) {
             false
         })
     }
+    //move
+    override fun onKeyWPress() {
+        super.onKeyWPress()
+    }
+    override fun onKeyAPress() {
+        super.onKeyWPress()
+    }
+    override fun onKeySPress() {
+        super.onKeyWPress()
+    }
+    override fun onKeyDPress() {
+        super.onKeyWPress()
+    }
+
+    //console
     override fun onKeyEnterPress() {
         if (main.console.isOpen) {
             main.console.inputKey('\n', 10) // 강제로 코드 10 넣어줌

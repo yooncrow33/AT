@@ -1,0 +1,158 @@
+package at.launch;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class ProfileStart {
+    final JFrame frame;
+
+    TextField officialNameField = new TextField("");
+    TextField iataField = new TextField("");
+    TextField icaoField = new TextField("");
+    TextField callSignField = new TextField("");
+
+    String officialName;
+    String iata;
+    String icao;
+    String callSign;
+
+    JLabel officialNameLabel = new JLabel("Airline Name :");
+    JLabel iataLabel = new JLabel("IATA code (length : 2) :");
+    JLabel icaoLabel = new JLabel("ICAO code (length : 3):");
+    JLabel callSignLabel = new JLabel("Call sign :");
+
+    JButton saveButton = new JButton("Go!");
+
+    final int profileId;
+    final boolean profile1_set, profile2_set, profile3_set;
+
+    public ProfileStart(int ProfileId, boolean profile1_set, boolean profile2_set, boolean profile3_set) {
+        profileId = ProfileId;
+        this.profile1_set = profile1_set;
+        this.profile2_set = profile2_set;
+        this.profile3_set = profile3_set;
+
+        frame = new JFrame("Set Profile " + ProfileId + " Launch");
+        frame.setSize(400, 150);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.add(officialNameField);
+        frame.add(iataField);
+        frame.add(icaoField);
+        frame.add(callSignField);
+        frame.add(officialNameLabel);
+        frame.add(iataLabel);
+        frame.add(icaoLabel);
+        frame.add(callSignLabel);
+        frame.add(saveButton);
+
+        officialNameLabel.setBounds(10,0,200,10);
+        officialNameField.setBounds(10,10,200,20);
+        iataLabel.setBounds(10,30,200,10);
+        iataField.setBounds(10,40,200,20);
+        icaoLabel.setBounds(10,60,200,10);
+        icaoField.setBounds(10,70,200,20);
+        callSignLabel.setBounds(10,90,200,10);
+        callSignField.setBounds(10,100,200,20);
+        saveButton.setBounds(220,5,170,115);
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveProfileData();
+                //boolean p1 = (profileId == 1) ? true : profile1_set;
+                //boolean p2 = (profileId == 2) ? true : profile2_set;
+                //boolean p3 = (profileId == 3) ? true : profile3_set;
+                String profileSet[];
+                switch (profileId) {
+                    case 1:
+                        profileSet = new String[]{ "empty", Boolean.toString(true), Boolean.toString(profile2_set), Boolean.toString(profile3_set) };
+                        break;
+                    case 2:
+                        profileSet = new String[]{ "empty", Boolean.toString(profile1_set), Boolean.toString(true), Boolean.toString(profile3_set) };
+                        break;
+                    case 3:
+                        profileSet = new String[]{ "empty", Boolean.toString(profile1_set), Boolean.toString(profile2_set), Boolean.toString(true) };
+                        break;
+                    default:
+                        profileSet = new String[]{ "empty", Boolean.toString(profile1_set), Boolean.toString(profile2_set), Boolean.toString(profile3_set) };
+                }
+                saveProfileDataIsSet(Boolean.parseBoolean(profileSet[1]), Boolean.parseBoolean(profileSet[2]), Boolean.parseBoolean(profileSet[3]));
+            }
+        });
+    }
+
+    public void saveProfileDataIsSet(boolean profile1_set, boolean profile2_set, boolean profile3_set) {
+        Properties p = new Properties();
+
+        p.setProperty("profile1_set", Boolean.toString(profile1_set));
+        p.setProperty("profile2_set", Boolean.toString(profile2_set));
+        p.setProperty("profile3_set", Boolean.toString(profile3_set));
+
+        String homeDir = System.getProperty("user.home")+ File.separator + "at" + File.separator + "save";
+
+        String fullPath1 = homeDir + File.separator + "TheStintSakhirProfileIsSet.properties";
+        String paths[] = {"empty", fullPath1};
+
+        try (FileOutputStream out = new FileOutputStream(paths[1])) {
+            p.store(out, "User Save Data - ID is not included");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "저장 실패: " + e.getMessage() + "\n경로: " + paths[1]);
+        }
+    }
+
+    public void saveProfileData() {
+        if (isEmpty(officialNameField) || isEmpty(iataField) || isEmpty(icaoField) || isEmpty(callSignField)) {
+            JOptionPane.showMessageDialog(null, "모든 데이터를 채워주세요.");
+            return;
+        }
+        officialName = officialNameField.getText().trim();
+        iata = iataField.getText().trim();
+        icao = icaoField.getText().trim();
+        callSign = callSignField.getText().trim();
+        callSign = iata.substring(0, 3).toUpperCase();
+
+        Properties p = new Properties();
+
+        p.setProperty("officialName", String.valueOf(officialName));
+        p.setProperty("iata", String.valueOf(iata));
+        p.setProperty("icao", String.valueOf(icao));
+        p.setProperty("callSign", String.valueOf(callSign));
+        p.setProperty("callSign", String.valueOf(callSign));
+
+        String homeDir = System.getProperty("user.home")+ File.separator + "at" + File.separator + "save";
+
+        String fullPath1 = homeDir + File.separator + "TheStintSakhirSaveProfile1.properties";
+        String fullPath2 = homeDir + File.separator + "TheStintSakhirSaveProfile2.properties";
+        String fullPath3 = homeDir + File.separator + "TheStintSakhirSaveProfile3.properties";
+        String paths[] = {"empty", fullPath1, fullPath2, fullPath3};
+
+        try (FileOutputStream out = new FileOutputStream(paths[profileId])) {
+
+            p.store(out, "User Save Data - ID is not included");
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "저장 실패: " + e.getMessage() + "\n경로: " + paths[profileId]);
+        }
+
+        frame.dispose();
+        LoadingScreen.showSplashThenLaunchGame(profileId);
+    }
+
+    public boolean isEmpty(TextField t) {
+        return t.getText().trim().isEmpty();
+    }
+
+    public static void main(String[] args) {
+        new ProfileStart(1, false, false, false);
+    }
+}

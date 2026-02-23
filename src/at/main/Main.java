@@ -15,6 +15,9 @@ public class Main extends SideScrollBase {
     KetListener ketListener = new KetListener(this,this);
 
     GraphicsManager gm = new GraphicsManager();
+
+    //변수
+    final int profileId;
     @Override
     protected void update(double originalDeltaTime) {
         double dt = originalDeltaTime / (16.0 / 1000.0);
@@ -36,12 +39,13 @@ public class Main extends SideScrollBase {
         console.render(g);
     }
 
-    public Main() {
+    public Main(int profileId) {
         super("at",5000,5000);
+        this.profileId = profileId;
         launch();
     }
 
     public static void main(String[] args) {
-        new Main();
+        new Main(1);
     }
 }

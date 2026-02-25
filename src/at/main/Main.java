@@ -1,6 +1,5 @@
 package at.main;
 
-import at.main.object.AirportConfig;
 import at.main.object.entity.View;
 import at.main.object.entity.game.Airport;
 import at.main.object.entity.game.DummyData;
@@ -8,13 +7,11 @@ import at.main.object.input.MouseListener;
 import at.main.object.manager.AirportKey;
 import at.main.object.manager.Console;
 import at.main.object.manager.GraphicsManager;
-import at.main.object.manager.Tab;
 import ie.main.input.at.main.object.input.KetListener;
 import scope.SideScrollBase;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends SideScrollBase {
     Console console = new Console(scopeEngine(),this);
@@ -29,14 +26,12 @@ public class Main extends SideScrollBase {
 
     MouseListener mouseListener = new MouseListener(this);
 
-    Tab tab = new Tab();
-    public Tab getTab() {return tab;}
-
     //변수
     final int profileId;
     int mouseX = 0;
     int mouseY = 0;
-    //e.getX() - camera.getX() + VIRTUAL_X_SCREEN_CENTER,e.getY() - camera.getY() + VIRTUAL_Y_SCREEN_CENTER
+    int coin = 20;
+
 
     //공항
     public ArrayList<Airport> airports;
@@ -51,7 +46,7 @@ public class Main extends SideScrollBase {
         //mouseY = (int) (getMouseY() - (getCamera().getY() + 540));
         mouseX = (int) (getMouseX() + getCamera().getX() - 960);
         mouseY = (int) (getMouseY() + getCamera().getY() - 540);
-        tab.update(dt);
+        //tab.update(dt);
     }
 
     @Override
@@ -99,8 +94,6 @@ public class Main extends SideScrollBase {
         g.fillRect(-200,1080,4000,2000);
         g.fillRect(1920,-400,300,4000);
 
-        tab.render(g);
-
     }
 
     public void click() {
@@ -111,14 +104,6 @@ public class Main extends SideScrollBase {
                 selectedAirport = air;
             }
         }
-    }
-
-    public void upScroll() {
-        tab.upScroll();
-    }
-
-    public void downScroll() {
-        tab.downScroll();
     }
 
     public Main(int profileId) {

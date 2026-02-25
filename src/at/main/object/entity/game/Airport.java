@@ -26,6 +26,10 @@ public class Airport extends Entity {
         return distSq < radiusSum * radiusSum;
     }
 
+    public AirportConfig getAc() {
+        return ac;
+    }
+
     @Override
     public void render(Graphics g, double x, double y) {
         if (selected) {g.setColor(new Color(240,140,30));} else {g.setColor(new Color(70,70,70));}
